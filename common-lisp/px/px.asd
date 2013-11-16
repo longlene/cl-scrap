@@ -4,4 +4,5 @@
                 :version "0.1"
                 :serial t
                 :compoent ((:file "package")
-                           (:file "getenv")))
+                           (:file "getenv")
+                           (:file "getpid")))
