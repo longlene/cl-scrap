@@ -1,0 +1,21 @@
+#!/usr/bin/ruby
+$CMDS = { ".git" => "git pull", ".hg" => "hg pull", ".svn" => "svn up" }
+
+def process(dir)
+        cmd = ""
+        $CMDS.each do |k, v|
+                d = File.join(dir, k)
+                cmd = v if File.exist?(d) && ((File.ctime(d) - Time.now).abs > 24 * 60 * 60)
+        end
+        unless cmd.empty?
+                puts "#{dir} => #{cmd}"
+                system("cd #{dir};" + cmd)
+                puts "#{dir}\n"
+                puts "------------------------------------------------------------------\n"
+        end
+end
+
+Dir.foreach(Dir.pwd) do |d|
+        process(File.join(Dir.pwd, d))
+end
+
